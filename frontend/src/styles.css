@@ -1,0 +1,11 @@
+header {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+}
+
+button {
+    background-color: #EC3030;
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+    border-radius: 5px;
+}
