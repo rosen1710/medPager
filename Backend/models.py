@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Text, ForeignKey, Boolean, DateTime, MetaData
+from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from datetime import datetime
 import os
@@ -13,12 +13,14 @@ class Users(Base):
     name: Mapped[str] = mapped_column(Text)
     position: Mapped[str] = mapped_column(ForeignKey("Positions.id"))
     is_available: Mapped[bool] = mapped_column(Boolean)
+    pager_id: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[DateTime] = mapped_column(DateTime)
 
-    def __init__(self, name, position):
+    def __init__(self, name, position, pager_id):
         self.name = name
         self.position = position
         self.available = True
+        self.pager_id = pager_id
         self.created_at = datetime.now()
 
 class Positions(Base):
