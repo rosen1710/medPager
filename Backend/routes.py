@@ -10,3 +10,18 @@
 # - заявка от frontend към backend за взимане на page-ове (ти сортираш спрямо кое отделение са)
 # - изтриване на page
 
+from flask import Flask, request, make_response
+from flask_cors import CORS
+from models import engine
+from sqlalchemy.orm import Session
+from models import Users
+
+app = Flask(__name__)
+CORS(app)
+
+@app.route("/user/<doc_id>", methods=["GET"])
+def toggle(doc_id):
+    with Session(engine) as session:
+        a = session.query(Users).filter(Users.id == doc_id).first()
+        print(a)
+    return make_response(a.name, 200)

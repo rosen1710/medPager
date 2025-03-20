@@ -7,6 +7,16 @@ from dotenv import load_dotenv
 class Base(DeclarativeBase):
     pass
 
+class Positions(Base):
+    __tablename__ = "Positions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    position: Mapped[str] = mapped_column(Text)
+    created_at: Mapped[DateTime] = mapped_column(DateTime,nullable=False)
+
+    def __init__(self, position):
+        self.position = position
+        self.created_at = datetime.now()
+
 class Users(Base):
     __tablename__ = "Users"
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -21,16 +31,6 @@ class Users(Base):
         self.position = position
         self.available = True
         self.pager_id = pager_id
-        self.created_at = datetime.now()
-
-class Positions(Base):
-    __tablename__ = "Position"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    position: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[DateTime] = mapped_column(DateTime)
-
-    def __init__(self, position):
-        self.position = position
         self.created_at = datetime.now()
 
 class Fields(Base):
@@ -63,5 +63,4 @@ port = os.getenv("DATABASE_PORT")
 db = os.getenv("POSTGRES_DB")
 
 engine = create_engine(f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{db}")
-metadata_obj = MetaData()
-metadata_obj.create_all(engine)
+Base.metadata.create_all(engine)
