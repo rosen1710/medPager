@@ -46,14 +46,6 @@ class DoctorsDepartmentsMap(Base):
     def __init__(self, doctor, department):
         self.doctor = doctor
         self.department = department
-
-class EmergencyCodes(Base):
-    __tablename__ = "EmergencyCodes"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    code: Mapped[str] = mapped_column(Text)
-
-    def __init__(self, code):
-        self.code = code
         
 class Pages(Base):
     __tablename__ = "Pages"
@@ -63,15 +55,13 @@ class Pages(Base):
     symptoms: Mapped[str] = mapped_column(Text, nullable=True)
     department: Mapped[int] = mapped_column(ForeignKey("Departments.id"))
     description: Mapped[str] = mapped_column(Text, nullable=True)
-    emergency_code: Mapped[str] = mapped_column(ForeignKey("EmergencyCodes.id"), nullable=True)
     created_at: Mapped[DateTime] = mapped_column(DateTime)
 
-    def __init__(self, room_number, icd_code=None, symptoms=None, department=None, emergency_code=None):
+    def __init__(self, room_number, icd_code=None, symptoms=None, department=None):
         self.room_number = room_number
         self.icd_code = icd_code
         self.symptoms = symptoms
         self.department = department
-        self.emergency_code = emergency_code
         self.created_at = datetime.now()
 
 load_dotenv()
