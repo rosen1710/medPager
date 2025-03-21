@@ -10,7 +10,6 @@ class Positions(Base):
     __tablename__ = "Positions"
     id: Mapped[int] = mapped_column(primary_key=True)
     position: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[DateTime] = mapped_column(DateTime,nullable=False)
 
     def __init__(self, position):
         self.position = position
@@ -22,7 +21,6 @@ class Users(Base):
     position: Mapped[str] = mapped_column(ForeignKey("Positions.id"))
     is_available: Mapped[bool] = mapped_column(Boolean)
     pager_id: Mapped[int] = mapped_column(Integer)
-    created_at: Mapped[DateTime] = mapped_column(DateTime)
 
     def __init__(self, name, position, pager_id):
         self.name = name
@@ -34,7 +32,6 @@ class Fields(Base):
     __tablename__ = "Fields"
     id: Mapped[int] = mapped_column(primary_key=True)
     field: Mapped[str] = mapped_column(Text)
-    created_at: Mapped[DateTime] = mapped_column(DateTime)
 
     def __init__(self, field):
         self.field = field
@@ -44,7 +41,6 @@ class DoctorsFieldsMap(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     doctor: Mapped[int] = mapped_column(ForeignKey("Users.id"))
     field: Mapped[int] = mapped_column(ForeignKey("Fields.id"))
-    created_at: Mapped[DateTime] = mapped_column(DateTime)
 
     def __init__(self, doctor, field):
         self.doctor = doctor
