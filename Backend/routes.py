@@ -1,8 +1,8 @@
-# / log in 
-# / log out 
+# / log in
+# / log out
 # + availability toggle
 # + заявка от frontend към backend за page с номер на стая и icd-10 код или описание на проблем
-# - заявка от backend към chat api за взимане на описание или icd-10 код 
+# - заявка от backend към chat api за взимане на описание или icd-10 код
 # - връщане на response от backend-a за frontend-a за допълване на page-a
 # - пращане на заявка от frontend към backend за пълен page
 # - пращане на page от backend към pager със стаята и icd-10 кода
@@ -13,10 +13,13 @@
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from sqlalchemy import select
+from queue import Queue
 from models import engine
 from sqlalchemy.orm import Session
 from models import Users, Pages
 from ai_connector import get_code_from_ai
+
+queue = Queue()
 
 emergency_codes = {
     "Black": "someone is armed and a threat",
@@ -71,18 +74,21 @@ def prompt():
 @app.route("/call", methods=["POST"])
 def call():
     data = dict(request.json)
-    with Session(engine) as session:
-        new_page = Pages(
-            room_number=data["room_number"],
-            icd_code=data["icd_code"],
-            description=data["description"]
-        )
-        session.add(new_page) 
-        session.commit()
+    # with Session(engine) as session:
+    #     new_page = Pages(
+    #         room_number=data["room_number"],
+    #         icd_code=data["icd_code"],
+    #         symptoms=data["symptoms"],
+    #         department=data["department"]
+    #     )
+    #     session.add(new_page)
+    #     session.commit()
+    queue.put(f"{data['department']}\n{data['icd_code']} in R. {data['room_number']}")
     return make_response("Page successfully added", 200)
 
 @app.route("/emergencies", methods=["GET"])
 def emergencies():
     return make_response(jsonify(emergency_codes), 200)
 
-app.run(host="0.0.0.0", port=8888, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
