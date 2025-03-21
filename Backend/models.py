@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime, MetaData
+from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 import os
 from dotenv import load_dotenv
@@ -53,7 +53,7 @@ class Pages(Base):
     room_number: Mapped[int] = mapped_column(Integer, nullable=False)
     icd_code: Mapped[str] = mapped_column(Text, nullable=True)
     symptoms: Mapped[str] = mapped_column(Text, nullable=True)
-    department: Mapped[int] = mapped_column(ForeignKey("Departments.id"))
+    department: Mapped[int] = mapped_column(ForeignKey("Departments.id"), nullable=True)
     description: Mapped[str] = mapped_column(Text, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(DateTime)
 

@@ -1,0 +1,23 @@
+@font-face {
+    font-family: "Chetkiy";
+    src: url("C:/Windows/Fonts/CHETKIYTYPEFACE.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+header {
+    flex: auto  ;
+}
+
+header-text {
+    font-family: "Chetkiy", sans-serif;
+    display: flex;
+}
+
+header-button {
+    background-color: #f71818;
+    font-family: "Inter", sans-serif;
+    font-weight: 200;
+    border-radius: 5px;
+    align-self: flex-end;
+}
