@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from datetime import datetime
 import os
 from dotenv import load_dotenv
 
@@ -15,7 +14,10 @@ class Positions(Base):
 
     def __init__(self, position):
         self.position = position
+<<<<<<< HEAD
         self.created_at = datetime.now()
+=======
+>>>>>>> backend/develop
 
 class Users(Base):
     __tablename__ = "Users"
@@ -31,7 +33,10 @@ class Users(Base):
         self.position = position
         self.available = True
         self.pager_id = pager_id
+<<<<<<< HEAD
         self.created_at = datetime.now()
+=======
+>>>>>>> backend/develop
 
 class Fields(Base):
     __tablename__ = "Fields"
@@ -41,7 +46,6 @@ class Fields(Base):
 
     def __init__(self, field):
         self.field = field
-        self.created_at = datetime.now()
 
 class DoctorsFieldsMap(Base):
     __tablename__ = "DoctorsFieldsMap"
@@ -53,8 +57,19 @@ class DoctorsFieldsMap(Base):
     def __init__(self, doctor, field):
         self.doctor = doctor
         self.field = field
-        self.created_at = datetime.now()
         
+class Pages(Base):
+    __tablename__ = "Pages"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    room_number: Mapped[int] = mapped_column(Integer, nullable=False)
+    icd_code: Mapped[str] = mapped_column(Text, nullable=True)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+
+    def __init__(self, room_number, icd_code=None, description=None):
+        self.room_number = room_number
+        self.icd_code = icd_code
+        self.description = description
+
 load_dotenv()
 user = os.getenv("POSTGRES_USER")
 password = os.getenv("POSTGRES_PASS")
