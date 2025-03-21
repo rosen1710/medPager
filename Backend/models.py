@@ -13,10 +13,6 @@ class Positions(Base):
 
     def __init__(self, position):
         self.position = position
-<<<<<<< HEAD
-        self.created_at = datetime.now()
-=======
->>>>>>> backend/develop
 
 class Users(Base):
     __tablename__ = "Users"
@@ -31,10 +27,6 @@ class Users(Base):
         self.position = position
         self.available = True
         self.pager_id = pager_id
-<<<<<<< HEAD
-        self.created_at = datetime.now()
-=======
->>>>>>> backend/develop
 
 class Fields(Base):
     __tablename__ = "Fields"
