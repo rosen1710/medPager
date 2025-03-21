@@ -4,6 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from models import engine, Users, Pages, DoctorsDepartmentsMap
 from ai_connector import get_code_from_ai
+import auth
 
 emergency_codes = {
     "Black": "someone is armed and a threat",
@@ -29,6 +30,11 @@ CORS(app)
 
 @app.route("/unavailable/<doc_id>", methods=["POST"])
 def unavailable(doc_id):
+    # data = dict(request.json)
+    # parsed_token = auth.parse_token(data.get("token"))
+    # if not auth.is_token_active(parsed_token):
+    #     return make_response({"message": "Unauthorized"}, 401)
+    
     with Session(engine) as session:
         user = session.scalar(select(Users).where(Users.id == doc_id))
         user.is_available = False
@@ -37,6 +43,11 @@ def unavailable(doc_id):
 
 @app.route("/available/<doc_id>", methods=["POST"])
 def available(doc_id):
+    # data = dict(request.json)
+    # parsed_token = auth.parse_token(data.get("token"))
+    # if not auth.is_token_active(parsed_token):
+    #     return make_response({"message": "Unauthorized"}, 401)
+    
     with Session(engine) as session:
         user = session.scalar(select(Users).where(Users.id == doc_id))
         user.is_available = True
@@ -45,6 +56,11 @@ def available(doc_id):
 
 @app.route("/prompt", methods=["POST"])
 def prompt():
+    # data = dict(request.json)
+    # parsed_token = auth.parse_token(data.get("token"))
+    # if not auth.is_token_active(parsed_token):
+    #     return make_response({"message": "Unauthorized"}, 401)
+    
     prompt_data = request.json.get("symptoms")
     icd_codes = get_code_from_ai(prompt_data)
     codes = ", ".join([item["code"] for item in icd_codes])
@@ -57,6 +73,11 @@ def prompt():
 
 @app.route("/create_page", methods=["POST"])
 def create_page():
+    # data = dict(request.json)
+    # parsed_token = auth.parse_token(data.get("token"))
+    # if not auth.is_token_active(parsed_token):
+    #     return make_response({"message": "Unauthorized"}, 401)
+    
     data = dict(request.json)
     with Session(engine) as session:
         new_page = Pages(
