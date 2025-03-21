@@ -76,7 +76,7 @@ def call():
 def emergencies():
     return make_response(jsonify(emergency_codes), 200)
 
-@app.route("/delete_pages/<page_id>", methods=["DELETE"])
+@app.route("/delete_page/<page_id>", methods=["DELETE"])
 def delete_page(page_id):
     with Session(engine) as session:
         page = session.query(Pages).filter(Pages.id == page_id).first()
