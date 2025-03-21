@@ -15,7 +15,20 @@ from flask_cors import CORS
 from sqlalchemy import select
 from models import engine
 from sqlalchemy.orm import Session
-from models import Users, Pages
+from models import Users, Pages, EmergencyCodes
+
+emergency_codes = {
+    "Black": "someone is armed and a threat",
+    "Gray": "unarmed but a threath",
+    "Blue": "life-threatening medical emergency",
+    "Brown": "external emergency",
+    "Orange": "evacuation",
+    "Purple": "bomb threat",
+    "Red": "fire",
+    "Yellow": "internal emergency",
+    "MET": "close to code blue",
+    "Pink": "unexpected labor unexpectedly or a newborn medical emergency"
+}
 
 app = Flask(__name__)
 CORS(app)
@@ -61,5 +74,9 @@ def call():
         session.add(new_page) 
         session.commit()
     return make_response("Page successfully added", 200)
+
+@app.route("/emergencies", methods=["GET"])
+def emergencies():
+    return make_response(jsonify(emergency_codes), 200)
 
 app.run(host="0.0.0.0", port=8888, debug=True)
