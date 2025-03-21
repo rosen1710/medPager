@@ -81,4 +81,23 @@ def delete_page(page_id):
         session.commit()
     return make_response("Page successfully deleted", 200)
 
+@app.route("/emergencies", methods=["GET"])
+def emergencies():
+    return make_response(jsonify(emergency_codes), 200)
+
+@app.route("/get_all_emergencies", methods=["GET"])
+def get_all_emergencies():
+    with Session(engine) as session:
+        pages = session.query(Pages).all()
+        response_data = []
+        for page in pages:
+            if(page.emergency_code != None):
+                response_data.append({
+                    "id": page.id,
+                    "room_number": page.room_number,
+                    "icd_code": page.icd_code,
+                    "symptoms": page.symptoms
+                })
+    return make_response(response_data, 200)
+
 app.run(host="0.0.0.0", port=5000, debug=True)
