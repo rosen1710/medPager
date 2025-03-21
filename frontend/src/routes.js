@@ -4,7 +4,7 @@ export default[
     layout("Header.jsx", [
         ...prefix("/home", [
             route("/nurse", "HomeNurse.jsx"),
-            route("/doctor", "HomeDoctor.jsx")
+            route("/doctor/:id", "HomeDoctor.jsx")
         ])
     ]),
     route("", "Start.jsx")
