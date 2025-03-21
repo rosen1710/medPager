@@ -1,10 +1,13 @@
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from sqlalchemy import select
+from queue import Queue
 from sqlalchemy.orm import Session
 from models import engine, Users, Pages, DoctorsDepartmentsMap
 from ai_connector import get_code_from_ai
-import auth
+# import auth
+
+queue = Queue()
 
 emergency_codes = {
     "Black": "someone is armed and a threat",
@@ -73,12 +76,12 @@ def prompt():
 
 @app.route("/create_page", methods=["POST"])
 def create_page():
-    # data = dict(request.json)
+    data = dict(request.json)
+
     # parsed_token = auth.parse_token(data.get("token"))
     # if not auth.is_token_active(parsed_token):
     #     return make_response({"message": "Unauthorized"}, 401)
-    
-    data = dict(request.json)
+
     with Session(engine) as session:
         new_page = Pages(
             room_number=data["room_number"],
@@ -87,6 +90,7 @@ def create_page():
         )
         session.add(new_page) 
         session.commit()
+    queue.put(f"{data['department']}\n{data['icd_code']} in R. {data['room_number']}")
     return make_response("Page successfully added", 200)
 
 @app.route("/get_pages", methods=["GET"])
@@ -146,4 +150,5 @@ def get_all_emergencies():
                 })
     return make_response(response_data, 200)
 
-app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
