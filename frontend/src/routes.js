@@ -5,7 +5,7 @@ export default[
         ...prefix("/home", [
             route("/nurse", "HomeNurse.jsx"),
             route("/doctor", "HomeDoctor.jsx")
-        ]),
-        route("", "Start.jsx")
-    ])
+        ])
+    ]),
+    route("", "Start.jsx")
 ]

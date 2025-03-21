@@ -9,7 +9,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <title>EduTrack</title>
+          <title>MedPager</title>
           <Meta />
           <Links />
         </head>
