@@ -33,7 +33,7 @@ void loop() {
   if (!client.connected()) {
     Serial.println("Disconnected from server! Reconnecting...");
     client.stop();
-    delay(5000);  // Give it time before reconnecting
+    delay(5000);
     connectToServer();
   } else {
     while (client.available()) {
@@ -41,7 +41,7 @@ void loop() {
       Serial.print("Received: ");
       Serial.println(response);
     }
-    client.println("Ping!");  // Keep the connection active
+    client.println("Ping!");
     delay(2000);
   }
 }

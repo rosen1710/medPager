@@ -18,7 +18,7 @@ while True:
             if not data:
                 break
             print(f"Received: {data}")
-            client.sendall("ACK\n".encode("utf-8"))  # Keep connection alive
+            client.sendall("ACK\n".encode("utf-8"))
     except:
         pass
     print("Client disconnected")
