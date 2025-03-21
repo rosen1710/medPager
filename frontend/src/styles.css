@@ -1,17 +1,11 @@
-@font-face {
-    font-family: "Chetkiy";
-    src: url("C:/Windows/Fonts/CHETKIYTYPEFACE.ttf") format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}
-
 .header {
     display: flex;
 }
 
 .header-text {
     margin: auto;
-    font-family: "Chetkiy", sans-serif;
+    font-family: "Cruinn", sans-serif;
+    font-weight: 500;
 }
 
 .header-button {
@@ -24,8 +18,28 @@
     padding-right: 15px;
 }
 
-.toggle {
-    margin: auto;
+.forms-nurse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+
+.codes {
+    padding: 5px;
+    border-radius: 25px;
+    margin-bottom: 15px;
+    display: block;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .doctors-page {
