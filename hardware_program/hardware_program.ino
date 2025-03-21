@@ -1,22 +1,56 @@
-#include <LiquidCrystal.h>
+#include <ESP8266WiFi.h>
 
-#define RS_pin 4
-#define EN_pin 6
-#define D4_pin 9
-#define D5_pin 10
-#define D6_pin 11
-#define D7_pin 12
+const char* ssid = "i0anbg";
+const char* password = "hiokay141414";
+const char* host = "192.168.117.216";
+const uint16_t port = 12345;
 
-#define COLS 16
-#define ROWS 2
-
-LiquidCrystal lcd(RS_pin, EN_pin, D4_pin, D5_pin, D6_pin, D7_pin);
+WiFiClient client;
 
 void setup() {
-  lcd.begin(COLS, ROWS);
-  lcd.setCursor(0, 0);
-  lcd.print("medPager");
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+
+  Serial.println("\nConnected to Wi-Fi!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.print("Connecting to server ");
+  Serial.print(host);
+  Serial.print(":");
+  Serial.println(port);
+
+  connectToServer();
 }
 
 void loop() {
+  if (!client.connected()) {
+    Serial.println("Disconnected from server! Reconnecting...");
+    client.stop();
+    delay(5000);  // Give it time before reconnecting
+    connectToServer();
+  } else {
+    while (client.available()) {
+      String response = client.readStringUntil('\n');
+      Serial.print("Received: ");
+      Serial.println(response);
+    }
+    client.println("Ping!");  // Keep the connection active
+    delay(2000);
+  }
+}
+
+void connectToServer() {
+  if (client.connect(host, port)) {
+    Serial.println("Connected to server!");
+    client.println("Hello from ESP8266!");
+  } else {
+    Serial.println("Connection failed!");
+  }
 }
