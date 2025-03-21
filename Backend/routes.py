@@ -1,6 +1,3 @@
-# - връщане на response от backend-a за frontend-a за допълване на page-a
-# - пращане на заявка от frontend към backend за пълен page
-
 from flask import Flask, request, make_response, jsonify
 from flask_cors import CORS
 from sqlalchemy import select
@@ -84,4 +81,4 @@ def delete_page(page_id):
         session.commit()
     return make_response("Page successfully deleted", 200)
 
-app.run(host="0.0.0.0", port=8888, debug=True)
+app.run(host="0.0.0.0", port=5000, debug=True)
