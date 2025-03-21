@@ -85,4 +85,12 @@ def call():
 def emergencies():
     return make_response(jsonify(emergency_codes), 200)
 
+@app.route("/delete_pages/<page_id>", methods=["DELETE"])
+def delete_page(page_id):
+    with Session(engine) as session:
+        page = session.query(Pages).filter(Pages.id == page_id).first()
+        session.delete(page)
+        session.commit()
+    return make_response("Page successfully deleted", 200)
+
 app.run(host="0.0.0.0", port=8888, debug=True)
