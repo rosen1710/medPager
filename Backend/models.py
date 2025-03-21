@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime, MetaData
+from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 import os
 from dotenv import load_dotenv
