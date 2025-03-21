@@ -15,7 +15,8 @@ from flask_cors import CORS
 from sqlalchemy import select
 from models import engine
 from sqlalchemy.orm import Session
-from models import Users, Pages, EmergencyCodes
+from models import Users, Pages
+from ai_connector import get_code_from_ai
 
 emergency_codes = {
     "Black": "someone is armed and a threat",
@@ -57,10 +58,15 @@ def available(doc_id):
 
 @app.route("/prompt", methods=["POST"])
 def prompt():
-    # prompt = dict(request.json)
-    icd_code = "R19.7"
-    response = {"icd_code": icd_code}
-    return make_response(jsonify(response), 200)
+    prompt_data = request.json.get("symptoms")
+    icd_codes = get_code_from_ai(prompt_data)
+    codes = ", ".join([item["code"] for item in icd_codes])
+    descriptions = ", ".join([item["description"] for item in icd_codes])
+    response_data = {
+        "codes": codes,
+        "descriptions": descriptions
+    }
+    return make_response(jsonify(response_data), 200)
 
 @app.route("/call", methods=["POST"])
 def call():
