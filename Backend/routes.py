@@ -22,6 +22,19 @@ CORS(app)
 @app.route("/user/<doc_id>", methods=["GET"])
 def toggle(doc_id):
     with Session(engine) as session:
-        a = session.query(Users).filter(Users.id == doc_id).first()
-        print(a)
-    return make_response(a.name, 200)
+        user = session.query(Users).filter(Users.id == doc_id).first()
+    return make_response(user.name, 200)
+
+@app.route("/unavaialble/<doc_id>", methods=["POST"])
+def unavailable(doc_id):
+    with Session(engine) as session:
+        user = session.query(Users).filter(Users.id == doc_id).first()
+        user.is_available = False
+    return make_response("Doctor successfully unavailable", 200)
+
+@app.route("/avaialble/<doc_id>", methods=["POST"])
+def available(doc_id):
+    with Session(engine) as session:
+        user = session.query(Users).filter(Users.id == doc_id).first()
+        user.is_available = True
+    return make_response("Doctor successfully available", 200)
