@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy import create_engine, Text, Integer, ForeignKey, Boolean, DateTime, MetaData
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 import os
@@ -28,35 +29,50 @@ class Users(Base):
         self.available = True
         self.pager_id = pager_id
 
-class Fields(Base):
-    __tablename__ = "Fields"
+class Departments(Base):
+    __tablename__ = "Departments"
     id: Mapped[int] = mapped_column(primary_key=True)
-    field: Mapped[str] = mapped_column(Text)
+    department: Mapped[str] = mapped_column(Text)
 
-    def __init__(self, field):
-        self.field = field
+    def __init__(self, department):
+        self.department = department
 
-class DoctorsFieldsMap(Base):
-    __tablename__ = "DoctorsFieldsMap"
+class DoctorsDepartmentsMap(Base):
+    __tablename__ = "DoctorsDepartmentsMap"
     id: Mapped[int] = mapped_column(primary_key=True)
     doctor: Mapped[int] = mapped_column(ForeignKey("Users.id"))
-    field: Mapped[int] = mapped_column(ForeignKey("Fields.id"))
+    department: Mapped[int] = mapped_column(ForeignKey("Departments.id"))
 
-    def __init__(self, doctor, field):
+    def __init__(self, doctor, department):
         self.doctor = doctor
-        self.field = field
+        self.department = department
+
+class EmergencyCodes(Base):
+    __tablename__ = "EmergencyCodes"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    code: Mapped[str] = mapped_column(Text)
+
+    def __init__(self, code):
+        self.code = code
         
 class Pages(Base):
     __tablename__ = "Pages"
     id: Mapped[int] = mapped_column(primary_key=True)
     room_number: Mapped[int] = mapped_column(Integer, nullable=False)
     icd_code: Mapped[str] = mapped_column(Text, nullable=True)
+    symptoms: Mapped[str] = mapped_column(Text, nullable=True)
+    department: Mapped[int] = mapped_column(ForeignKey("Departments.id"))
     description: Mapped[str] = mapped_column(Text, nullable=True)
+    emergency_code: Mapped[str] = mapped_column(ForeignKey("EmergencyCodes.id"), nullable=True)
+    created_at: Mapped[DateTime] = mapped_column(DateTime)
 
-    def __init__(self, room_number, icd_code=None, description=None):
+    def __init__(self, room_number, icd_code=None, symptoms=None, department=None, emergency_code=None):
         self.room_number = room_number
         self.icd_code = icd_code
-        self.description = description
+        self.symptoms = symptoms
+        self.department = department
+        self.emergency_code = emergency_code
+        self.created_at = datetime.now()
 
 load_dotenv()
 user = os.getenv("POSTGRES_USER")
