@@ -6,7 +6,6 @@ export default function Header() {
         <div>
             <div className='header'>
                 <h1 className="header-text">MedPager</h1>
-                <button className="header-button">Log out</button>
             </div>
             <div>
                 <Outlet/>

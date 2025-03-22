@@ -50,18 +50,20 @@ class DoctorsDepartmentsMap(Base):
 class Pages(Base):
     __tablename__ = "Pages"
     id: Mapped[int] = mapped_column(primary_key=True)
-    room_number: Mapped[int] = mapped_column(Integer, nullable=False)
+    room_number: Mapped[int] = mapped_column(Integer, nullable=True)
     icd_code: Mapped[str] = mapped_column(Text, nullable=True)
     symptoms: Mapped[str] = mapped_column(Text, nullable=True)
     department: Mapped[int] = mapped_column(ForeignKey("Departments.id"), nullable=True)
+    department_name: Mapped[str] = mapped_column(Text, nullable=True)
     description: Mapped[str] = mapped_column(Text, nullable=True)
     created_at: Mapped[DateTime] = mapped_column(DateTime)
 
-    def __init__(self, room_number, icd_code=None, symptoms=None, department=None):
+    def __init__(self, room_number=None, icd_code=None, symptoms=None, department=None, department_name=None):
         self.room_number = room_number
         self.icd_code = icd_code
         self.symptoms = symptoms
         self.department = department
+        self.department_name = department_name
         self.created_at = datetime.now()
 
 load_dotenv()
