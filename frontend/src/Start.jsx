@@ -2,8 +2,8 @@ import axios from "axios";
 import { useState } from "react";
 
 export async function clientAction({ request }) {
-  const formData = await request.formData();
-  const body = Object.fromEntries(formData);
+  const form_data = await request.formData();
+  const body = Object.fromEntries(form_data);
   const result = await axios.post("endpoint", body);
 }
 
