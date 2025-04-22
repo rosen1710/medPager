@@ -4,12 +4,9 @@
 
 String department = "Ophthalmology";
 
-// const char* ssid = "InnovationForumGuests";
-// const char* password = "";
-// const char* host = "10.1.171.66";
-const char* ssid = "Tech_D3815701";
-const char* password = "EUWVSUTG";
-const char* host = "192.168.0.21";
+const char* ssid = "Nick's Galaxy A34";
+const char* password = "HackTUESX";
+const char* host = "192.168.243.86";
 const uint16_t port = 12345;
 
 const char upButton = D5;
