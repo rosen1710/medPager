@@ -11,10 +11,10 @@ export default function Start() {
   const [visible, setVisibility] = useState(false);
 
   return (
-    <div style={styles.container}>
-      <div style={styles.content}>
-        <h1 style={styles.title}>MedPager</h1>
-        <p style={styles.description}>
+    <div className="container">
+      <div className="content">
+        <h1 className="title">MedPager</h1>
+        <p className="description">
           medPager е проект, който цели да улесни комуникацията между всички
           медицински лица в една болница. Представлява иновативна система,
           която използва изкуствен интелект, на който медицинската сестра
@@ -27,16 +27,16 @@ export default function Start() {
           специалност.
         </p>
         <a href="/nurse">Open messages portal</a>
-        <div style={styles.imageContainer}>
+        <div className="imageContainer">
           <img
             src="/signal-2025-03-21-193104_002.jpeg"
             alt="Image 1"
-            style={styles.image}
+            className="image"
           />
           <img
             src="/signal-2025-03-21-193104.jpeg"
             alt="Image 2"
-            style={styles.image}
+            className="image"
           />
         </div>
       </div>
