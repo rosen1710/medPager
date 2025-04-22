@@ -19,7 +19,7 @@ export async function clientLoader() {
     const codes = await axios.get(`http://localhost:5000/emergencies`);
     return codes.data;
   } catch (error) {
-    // console.error(error);
+    console.error(error);
     return { "No connection": "backend server is unreachable" };
   }
 }
@@ -76,15 +76,18 @@ export default function HomeNurse({ loaderData }) {
 
   return (
     <div>
-      <button onClick={kc.logout}>Logout</button>
+      <button onClick={kc.logout} className="button bg-red-500">
+        Logout
+      </button>
       <br></br>
       <br></br>
       <br></br>
-      <div>
+      <div className="emergency">
         <select
           name="code"
           onChange={(e) => setEmergencyCode(e.target.value)}
           value={emergencyCode}
+          className="select"
         >
           {Object.keys(codes).map((code) => (
             <option value={code}>
@@ -92,17 +95,22 @@ export default function HomeNurse({ loaderData }) {
             </option>
           ))}
         </select>
-        <button onClick={submitEmergency}>Send emergency code</button>
+        <button onClick={submitEmergency} className="button">
+          Send emergency code
+        </button>
       </div>
-      <div>
+      <div className="emergency">
         <label>
           <p>Description:</p>
           <textarea
             name="description"
             onChange={(e) => setDescription(e.target.value)}
+            className="textarea"
           />
         </label>
-        <button onClick={sendPrompt}>Get code</button>
+        <button onClick={sendPrompt} className="button">
+          Get code
+        </button>
         <label>
           <p>ICD-10 Code:</p>
           <input
@@ -110,6 +118,7 @@ export default function HomeNurse({ loaderData }) {
             name="icd_code"
             onChange={(e) => setIcdCode(e.target.value)}
             value={icdCode}
+            className="input"
           />
         </label>
         <label>
@@ -119,6 +128,7 @@ export default function HomeNurse({ loaderData }) {
             name="department"
             onChange={(e) => setDepartment(e.target.value)}
             value={department}
+            className="input"
           />
         </label>
         <label>
@@ -127,9 +137,12 @@ export default function HomeNurse({ loaderData }) {
             type="number"
             name="room_number"
             onChange={(e) => setRoomNumber(e.target.value)}
+            className="input"
           />
         </label>
-        <button onClick={submitPage}>Submit</button>
+        <button onClick={submitPage} className="button">
+          Submit
+        </button>
       </div>
     </div>
   );
